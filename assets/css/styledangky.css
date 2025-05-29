@@ -126,16 +126,13 @@ body {
 }
 
 .error-message {
-  color: #d9534f; /* đỏ cảnh báo */
-  padding: 8px 12px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  border-radius: 4px;
-  font-size: 14px;
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .login-link {
