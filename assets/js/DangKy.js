@@ -12,130 +12,64 @@ function myfunction() {
     }
   }
 
-// Update the email validation function
-const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-};
-
-const validatePassword = (password) => {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
-};
-
-  // Modify the DOMContentLoaded event listener
+  // Áp dụng kiểm tra khi trang tải
   document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('registerForm');
-    const inputs = {
-        fullName: document.getElementById('fullName'),
-        email: document.getElementById('email'),
-        password: document.getElementById('password')
-    };
+    const emailOrPhoneInput = document.getElementById('emailOrPhone');
+    const passwordInput = document.getElementById('password');
+    setRequiredError(passwordInput, 'Vui lòng nhập mật khẩu!');
+    setEmailOrPhoneError(emailOrPhoneInput);
+  });
 
-    // Create error elements if they don't exist
-    Object.keys(inputs).forEach(field => {
-        const input = inputs[field];
-        if (!document.getElementById(`${field}-error`)) {
-            const errorDiv = document.createElement('div');
-            errorDiv.id = `${field}-error`;
-            errorDiv.className = 'error-message hidden';
-            input.parentNode.insertBefore(errorDiv, input.nextSibling);
-        }
-    });
-
-    // Add real-time validation for each input
-    if (inputs.fullName) {
-        inputs.fullName.addEventListener('input', function() {
-            const error = document.getElementById('fullName-error');
-            if (!this.value.trim()) {
-                showError(this, error, 'Vui lòng nhập họ tên!');
-            } else if (this.value.trim().length < 2) {
-                showError(this, error, 'Họ tên phải có ít nhất 2 ký tự!');
-            } else {
-                hideError(this, error);
-            }
-        });
-    }
-
-    if (inputs.email) {
-        inputs.email.addEventListener('input', function() {
-            const error = document.getElementById('email-error');
-            const email = this.value.trim();
-            
-            if (!email) {
-                showError(this, error, 'Vui lòng nhập địa chỉ email!');
-            } else if (!validateEmail(email)) {
-                showError(this, error, 'Email không hợp lệ! (Ví dụ: example@domain.com)');
-            } else {
-                hideError(this, error);
-            }
-        });
-    }
-
-    if (inputs.password) {
-        inputs.password.addEventListener('input', function() {
-            const error = document.getElementById('password-error');
-            const password = this.value.trim();
-            
-            if (!password) {
-                showError(this, error, 'Vui lòng nhập mật khẩu!');
-            } else if (!validatePassword(password)) {
-                showError(this, error, 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số!');
-            } else {
-                hideError(this, error);
-            }
-        });
-    }
-});
-
-// Add these helper functions
-function showError(input, errorElement, message) {
-    input.classList.add('error');
-    errorElement.textContent = message;
-    errorElement.classList.remove('hidden');
-}
-
-function hideError(input, errorElement) {
-    input.classList.remove('error');
-    errorElement.classList.add('hidden');
-}
-
-// Modify the existing validateForm function
 function validateForm(event) {
-    event.preventDefault();
-    
-    const inputs = {
-        fullName: document.getElementById('fullName'),
-        email: document.getElementById('email'),
-        password: document.getElementById('password')
-    };
-    
-    let isValid = true;
+event.preventDefault();
 
-    // Validate all fields
-    if (inputs.fullName && (!inputs.fullName.value.trim() || inputs.fullName.value.trim().length < 2)) {
-        showError(inputs.fullName, document.getElementById('fullName-error'), 
-            'Họ tên phải có ít nhất 2 ký tự!');
-        isValid = false;
-    }
+const form = event.target;
+const isRegister = form.id === 'registerForm';
+const email = document.getElementById('email').value.trim();
+const password = document.getElementById('password').value.trim();
+const passwordError = document.getElementById('password-error');
 
-    if (inputs.email && !validateEmail(inputs.email.value.trim())) {
-        showError(inputs.email, document.getElementById('email-error'), 
-            'Email không hợp lệ! (Ví dụ: example@domain.com)');
-        isValid = false;
-    }
+passwordError.classList.add('hidden');
 
-    if (inputs.password && !validatePassword(inputs.password.value.trim())) {
-        showError(inputs.password, document.getElementById('password-error'), 
-            'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số!');
-        isValid = false;
-    }
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
-    if (isValid) {
-        // Call your API here
-        alert('Form hợp lệ - sẵn sàng gửi!');
-    }
+// ---------------- Form Đăng ký ----------------
+if (isRegister) {
+  const fullName = document.getElementById('fullName').value.trim();
 
-    return isValid;
+  if (!fullName || !email || !password) {
+    passwordError.textContent = 'Vui lòng nhập đầy đủ họ tên, email và mật khẩu!';
+    passwordError.classList.remove('hidden');
+    return false;
+  }
+
+  if (!passwordRegex.test(password)) {
+    passwordError.textContent = 'Mật khẩu không hợp lệ! Phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.';
+    passwordError.classList.remove('hidden');
+    return false;
+  }
+
+  alert('Đăng ký thành công!');
+} 
+
+// ---------------- Form Đăng nhập ----------------
+else {
+  if (!email || !password) {
+    passwordError.textContent = 'Vui lòng nhập đầy đủ email và mật khẩu!';
+    passwordError.classList.remove('hidden');
+    return false;
+  }
+
+  if (!passwordRegex.test(password)) {
+    passwordError.textContent = 'Mật khẩu không hợp lệ! Phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.';
+    passwordError.classList.remove('hidden');
+    return false;
+  }
+
+  alert('Đăng nhập thành công!');
+}
+
+return true;
 }
 
 // Hàm tùy chỉnh thông báo lỗi cho các trường bắt buộc
