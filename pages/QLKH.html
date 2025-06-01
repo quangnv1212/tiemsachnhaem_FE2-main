@@ -32,6 +32,31 @@
       textarea {
         font-family: "Montserrat", sans-serif;
       }
+      /* Thêm style cho bảng lịch sử đơn hàng trong popup */
+      #popupOrderHistory table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        color: #333;
+        margin-top: 10px;
+      }
+      #popupOrderHistory th,
+      #popupOrderHistory td {
+        padding: 8px 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+      #popupOrderHistory th {
+        background-color: #f5f5f5;
+        color: #666;
+        font-weight: 500;
+      }
+      #popupOrderHistory tr:last-child td {
+        border-bottom: none;
+      }
+      #popupOrderHistory td.status-column {
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -52,8 +77,8 @@
             <div class="status-dropdown">
               <select id="statusFilter" onchange="filterStatus(this.value)">
                 <option value="all">Tất cả trạng thái</option>
-                <option value="active">Active</option>
-                <option value="lock">Lock</option>
+                <option value="true">Hoạt động</option>
+                <option value="false">Bị khóa</option>
               </select>
             </div>
           </div>
@@ -110,6 +135,10 @@
               <strong>Đơn hàng gần nhất:</strong>
               <span id="popupLastOrder"></span>
             </p>
+            <p>
+              <strong>Đơn hàng gần đây nhất:</strong>
+              <span id="popupEarliestOrder"></span>
+            </p>
             <h3>Lịch sử đơn hàng</h3>
             <table>
               <thead>
@@ -126,8 +155,9 @@
         </div>
         <div class="popup-footer">
           <button
+            id="block-btn"
             class="block-btn"
-            onclick="showConfirmPopupFromPopup(document.getElementById('popupName').textContent, document.getElementById('popupStatus').textContent === 'lock')"
+            onclick="showConfirmPopupFromPopup(document.getElementById('popupName').textContent, document.getElementById('popupStatus').textContent === 'Bị khóa')"
           >
             <img
               src="https://img.icons8.com/material-outlined/24/ffffff/lock.png"
