@@ -5,7 +5,6 @@
     background: #ffffff;
     color: #333;
     padding: 15px;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,7 +23,7 @@
       style="text-align: center; margin-bottom: 35px; padding-top: 10px"
     >
       <img
-        src="assets/images/Logo to.png"
+        src="../assets/images/Logo to.png"
         alt="Tiệm Sách Nhà Em"
         width="140"
         height="109"
@@ -33,7 +32,7 @@
     <ul class="menu" style="list-style: none; padding: 0; margin: 0">
       <li
         id="menu-overview"
-        onclick="location.href='index.html'"
+        onclick="location.href='../pages/admin.html'"
         style="
           display: flex;
           align-items: center;
@@ -60,7 +59,7 @@
           "
         >
           <img
-            src="assets/images/Tổng quan trắng.png"
+            src="../assets/images/Tổng quan trắng.png"
             width="22"
             alt="Tổng quan"
             style="filter: brightness(0.3)"
@@ -70,7 +69,7 @@
       </li>
       <li
         id="menu-products"
-        onclick="location.href='adminQLSP.html'"
+        onclick="location.href='../pages/adminQLSP.html'"
         style="
           display: flex;
           align-items: center;
@@ -97,7 +96,7 @@
           "
         >
           <img
-            src="assets/images/Quản lý sản phẩm.png"
+            src="../assets/images/Quản lý sản phẩm.png"
             width="22"
             alt="Sản phẩm"
             style="filter: brightness(0.3)"
@@ -107,7 +106,7 @@
       </li>
       <li
         id="menu-orders"
-        onclick="location.href='quanlydonhang.html'"
+        onclick="location.href='../pages/quanlydonhang.html'"
         style="
           display: flex;
           align-items: center;
@@ -134,7 +133,7 @@
           "
         >
           <img
-            src="assets/images/quản lý đơn hàng.png"
+            src="../assets/images/quản lý đơn hàng.png"
             width="22"
             alt="Đơn hàng"
             style="filter: brightness(0.3)"
@@ -144,7 +143,7 @@
       </li>
       <li
         id="menu-customers"
-        onclick="location.href='QLKH.html'"
+        onclick="location.href='../pages/QLKH.html'"
         style="
           display: flex;
           align-items: center;
@@ -171,7 +170,7 @@
           "
         >
           <img
-            src="assets/images/quản lý khách hàng.png"
+            src="../assets/images/quản lý khách hàng.png"
             width="22"
             alt="Khách hàng"
             style="filter: brightness(0.3)"
@@ -181,7 +180,7 @@
       </li>
       <li
         id="menu-statistics"
-        onclick="location.href='statistics.html'"
+        onclick="location.href='../pages/statistics.html'"
         style="
           display: flex;
           align-items: center;
@@ -208,7 +207,7 @@
           "
         >
           <img
-            src="assets/images/Thống kê.png"
+            src="../assets/images/Thống kê.png"
             width="22"
             alt="Thống kê"
             style="filter: brightness(0.3)"
@@ -217,8 +216,6 @@
         <span>Thống kê</span>
       </li>
     </ul>
-
-    <div style="border-top: 1px solid #f0f0f0; margin-top: 15px"></div>
 
     <div
       class="account-info"
@@ -259,9 +256,38 @@
         <div style="font-size: 16px; font-weight: bold; color: #333">ADMIN</div>
       </div>
       <button
+        id="back-button"
+        class="logout-button"
+        onclick="window.location.href='../pages/index.html'"
+        style="
+          width: 100%;
+          background-color: #6563ff;
+          color: white;
+          border: none;
+          padding: 12px 15px;
+          text-align: center;
+          font-size: 16px;
+          margin-top: 5px;
+          border-radius: 8px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 8px rgba(101, 99, 255, 0.3);
+        "
+      >
+        <img
+          src="../assets/images/icon-shop.png"
+          width="18"
+          style="margin-right: 8px; filter: brightness(0) invert(1)"
+        />
+        <span>Trở về Shop</span>
+      </button>
+      <button
         id="logout-button"
         class="logout-button"
-        onclick="logout()"
+        onclick="logOutHandler()"
         style="
           width: 100%;
           background-color: #f44336;
@@ -282,7 +308,7 @@
         "
       >
         <img
-          src="assets/images/Frame.png"
+          src="../assets/images/Frame.png"
           width="18"
           style="margin-right: 8px; filter: brightness(0) invert(1)"
         />
@@ -307,40 +333,6 @@
 </style>
 
 <!-- Thêm script đăng xuất trực tiếp -->
-<script>
-  function logout() {
-    console.log("Logout function called directly");
-    // Xóa thông tin người dùng khỏi localStorage
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-
-    // Xác định đường dẫn đến trang đăng nhập dựa trên vị trí hiện tại
-    const currentPath = window.location.pathname;
-    let loginPath;
-
-    // Nếu đang ở trang chính (root)
-    if (
-      currentPath.endsWith("index.html") ||
-      currentPath === "/" ||
-      currentPath.endsWith("/")
-    ) {
-      loginPath = "dangnhap1.html";
-    }
-    // Nếu đang ở trong thư mục pages
-    else if (currentPath.includes("/pages/")) {
-      loginPath = "dangnhap1.html";
-    }
-    // Trường hợp khác
-    else {
-      loginPath = "pages/dangnhap1.html";
-    }
-
-    console.log("Đăng xuất thành công, chuyển hướng đến:", loginPath);
-    // Chuyển hướng đến trang đăng nhập
-    window.location.href = loginPath;
-  }
-</script>
 
 <!-- Thêm file JavaScript cho sidebar -->
 <script src="../assets/js/sidebar.js"></script>
