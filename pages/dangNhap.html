@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Đăng nhập Admin</title>
+  <title>Web Bán Sách</title>
   <link rel="stylesheet" href="../assets/css/global.css">
   <link rel="stylesheet" href="../assets/css/styledangky.css">
 </head>
@@ -17,7 +17,7 @@
     <div class="form-box">
       <h1>Đăng nhập</h1>
       <br>
-      <form id="loginForm">
+      <form id="loginForm" onsubmit="return callLoginAPI(event)">
         <h4>Email</h4>
         <input type="email" id="email" placeholder="Nhập email" required oninvalid="setEmailError(this)"> <br> <br>
         <h4>Mật khẩu</h4>
@@ -26,13 +26,14 @@
           <img onclick="anHienPass()" src="../assets/Hình/view.png" class="eye-icon" alt="Hiện mật khẩu">
         </div>
         <div id="password-error" class="error-message hidden">Vui lòng nhập mật khẩu!</div>
-        <a href="../pages/quenMK1Ad.html" class="quenMK-link">Quên mật khẩu?</a> <br>
+        <a href="../pages/quenMK1.html" class="quenMK-link">Quên mật khẩu?</a> <br>
 
         <button type="submit">Đăng nhập</button> <br> <br>
+        <a href="../pages/dangky.html" class="login-link">← Bạn chưa có tài khoản? <strong>Đăng ký ngay</strong></a>
       </form>
     </div>
   </div>
   <script src="../assets/js/javascriptDangKy.js"></script>
-  <script src="../assets/js/API_DangNhapAd.js"></script>
+  <script src="../assets/js/API_DangNhap.js"></script>
 </body>
 </html>

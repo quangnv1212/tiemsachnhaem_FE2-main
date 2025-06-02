@@ -1,217 +1,114 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trang quản lý - Tiệm Sách Nhà Em</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style_sidebar.css" />
-  <link rel="stylesheet" href="../assets/css/style_common.css" />
-  <link rel="stylesheet" href="../assets/css/style_index.css" />
-  <style>
-    .container-all {
-      display: flex;
-      margin: 0 auto;
-      overflow: hidden;
-      background-color: #F5F5F7;
-    }
-    
-    body, h1, h2, h3, h4, p, button, input, select, textarea {
-      font-family: 'Montserrat', sans-serif;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Trang chủ</title>
+  <link rel="stylesheet" href="../assets/css/stylehome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style_DetailProduct.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="container-all">
-    
-    <div id="sidebar-container" class="sidebar"></div>
+  <div id="header-placeholder"></div>
 
-    <div class="main">
-      <div class="container">
-        <h2>Xin chào!</h2>
-        <div class="overview-header">
-          <p>Đây là tổng quan hoạt động của ngày hôm nay.</p>
-          <div class="time-filter">
-            <button class="time-btn">Tuần</button>
-            <button class="time-btn active">Tháng</button>
-            <button class="time-btn">Năm</button>
-            <button class="time-btn custom">
-              <img src="../assets/images/Máy in.png" width="16" style="margin-right: 4px;" />
-              Tùy chỉnh
-            </button>
+    <main class="container">
+        <!-- Include header -->
+          <div class="banner-container">
+            <img src="../assets/Hình/Welcome.png" alt="Tiệm sách nhà em" class="banner-image">
           </div>
-          <div id="custom-date-range" style="display: none; margin-top: 10px;">
-            <label>Từ ngày: <input type="date" id="from-date"></label>
-            <label>Đến ngày: <input type="date" id="to-date"></label>
-            <button id="apply-filter">Lọc</button>
-          </div>
-        </div>
 
-        <div class="overview">
-          <div class="card blue">
-            <div class="icon">📦</div>
-            <h3>Tổng đơn hàng</h3>
-            <div class="value" id="total-orders">...</div>
-          </div>
-          <div class="card green">
-            <div class="icon">🛒</div>
-            <h3>Đơn hàng mới</h3>
-            <div class="value" id="new-orders">...</div>
-          </div>
-          <div class="card purple">
-            <div class="icon">👥</div>
-            <h3>Khách hàng</h3>
-            <div class="value" id="total-customers">...</div>
-          </div>
-          <div class="card yellow">
-            <div class="icon">💰</div>
-            <h3>Doanh thu</h3>
-            <div class="value" id="revenue">...</div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="box">
-            <div class="box-header">
-              <h4>Sách bán chạy</h4>
-              <a href="#">Xem tất cả</a>
+        
+        <section class="book-banners" aria-label="Các banner sách nổi bật">
+            <div class="banner-item">
+                <img src="../assets/Hình/h1.jpg" alt="Combo sách trí tuệ của thiên nhiên">
             </div>
-            <div id="product-list">Đang tải...</div>
-          </div>
-
-          <div class="box">
-            <div class="box-header">
-              <h4>Đơn hàng gần đây</h4>
-              <a href="#">Xem tất cả</a>
+            <div class="banner-item">
+                <img src="../assets/Hình/h2.jpg" alt="Bestseller Books">
             </div>
-            <div id="recent-orders">Đang tải đơn hàng gần đây...</div>
-          </div>
-        </div>
-      </div>
+            <div class="banner-item">
+                <img src="../assets/Hình/h3.jpg" alt="Đường xưa mây trắng - Truyện về Đức Phật">
+            </div>
+        </section>
+  
+  <section class="popular-books">
+  <!-- DÒNG NÚT + XEM TẤT CẢ -->
+  <div class="control-row">
+    <div class="right-controls">
+      <h3>Sách nổi bật</h3>
+      <button class="see-all-btn">Xem tất cả</button>
     </div>
   </div>
 
-  <script>
-    // Lấy tổng số khách hàng
-    fetch('https://tiemsachnhaem-be-mu.vercel.app/api/customers')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("total-customers").textContent = data.length.toLocaleString('vi-VN');
-      });
+  <div class="carousel-wrapper">
+      <button class="carousel-btn prev"><i class="fas fa-arrow-left"></i></button>
 
-    function renderOrders(filtered) {
-      let revenue = 0, newOrders = 0;
-      filtered.forEach(o => {
-        if (o.status === 'delivered') revenue += o.totalAmount;
-        if (o.status === 'pending') newOrders++;
-      });
+    <div class="book-list">
+      <!-- Product cards will be loaded here by javascriptHome.js -->
+    </div>
 
-      document.getElementById("total-orders").textContent = filtered.length;
-      document.getElementById("new-orders").textContent = newOrders;
-      document.getElementById("revenue").textContent = revenue.toLocaleString('vi-VN') + " VND";
+  <button class="carousel-btn next"><i class="fas fa-arrow-right"></i></button>
+</section>
 
-      const sorted = filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      const recent = sorted.slice(0, 3);
-      const html = recent.map(order => {
-        const statusMap = {
-          pending: { text: "pending", class: "red" },
-          delivered: { text: "delivered", class: "green" },
-          canceled: { text: "canceled", class: "gray" },
-          shipped: { text: "shipped", class: "blue" },
-          processing: { text: "processing", class: "orange" }
-        };
-        const raw = order.status?.toLowerCase();
-        const status = statusMap[raw] || { text: raw || "unknown", class: "gray" };
-        return `
-          <div class="order-item">
-            <div class="order-left">
-              <img src="../assets/images/Container.png" width="32" height="32" />
-              <div class="order-info">
-                <strong>${order.customerId}</strong>
-                <span>#${order.orderId} • ${order.productQuantity} sản phẩm</span>
-              </div>
+        <section class="book-banners2" aria-label="Poster">
+            <div class="banner-item2">
+                <img src="../assets/Hình/h4.jpg" alt="New Releases">
             </div>
-            <div class="order-dates">
-              <span>Dự kiến giao ngày:</span>${new Date(order.orderDate).toLocaleDateString('vi-VN')}
-              <span>Ngày giao:</span>${order.status === 'delivered' ? new Date(order.updatedAt).toLocaleDateString('vi-VN') : "---"}
+            <div class="banner-item2">
+                <img src="../assets/Hình/h5.jpg" alt="Must read book for teen">
             </div>
-            <div class="order-status">
-              <div class="order-price">${order.totalAmount.toLocaleString()} VND</div>
-              <div class="status ${status.class}">${status.text}</div>
+            <div class="banner-item2">
+                <img src="../assets/Hình/h6.jpg" alt="Jigsaw puzzles play and learn">
             </div>
-          </div>
-        `;
-      }).join('');
-      document.getElementById("recent-orders").innerHTML = html;
-    }
+            <div class="banner-item2">
+                <img src="../assets/Hình/h7.jpg" alt="Top books for self-improvement">
+            </div>
+        </section>
 
-    function filterOrdersByTime(label, data) {
-      const now = new Date();
-      let filtered = [];
+            <section class="service-features">
+        <div class="feature-item">
+          <i class="fas fa-shipping-fast"></i>
+          <h4>Giao hàng miễn phí</h4>
+          <p>Miễn phí nội thành HN, TP.HCM, ĐN</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-credit-card"></i>
+          <h4>Thanh toán an toàn</h4>
+          <p>Thanh toán linh hoạt, an toàn và tiện lợi</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-shopping-bag"></i>
+          <h4>Đổi hàng theo yêu cầu</h4>
+          <p>Đổi hàng dễ dàng trong 7 ngày nếu có lỗi</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-recycle"></i>
+          <h4>Đổi mới vì môi trường</h4>
+          <p>Giảm thiểu rác thải sử dụng</p>
+        </div>
+    </main>
+    
+  </div>
+<!-- Include footer -->
+  <div id="footer-placeholder"></div>
 
-      if (label === "tuần") {
-        const oneWeekAgo = new Date(now);
-        oneWeekAgo.setDate(now.getDate() - 7);
-        filtered = data.filter(o => new Date(o.orderDate) >= oneWeekAgo);
-      } else if (label === "tháng") {
-        const month = now.getMonth();
-        const year = now.getFullYear();
-        filtered = data.filter(o => {
-          const d = new Date(o.orderDate);
-          return d.getMonth() === month && d.getFullYear() === year;
-        });
-      } else if (label === "năm") {
-        const year = now.getFullYear();
-        filtered = data.filter(o => new Date(o.orderDate).getFullYear() === year);
-      } else {
-        filtered = data;
-      }
+  <script src="../assets/js/component-loader.js"></script>
+  <script src="../assets/js/javascriptHome.js"></script>
 
-      return filtered;
-    }
-
-    document.querySelectorAll(".time-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        const label = btn.innerText.trim().toLowerCase();
-
-        if (label === "tùy chỉnh") {
-          document.getElementById("custom-date-range").style.display = "block";
-        } else {
-          document.getElementById("custom-date-range").style.display = "none";
-        }
-
-        fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders')
-          .then(res => res.json())
-          .then(data => renderOrders(filterOrdersByTime(label, data)));
-      });
-    });
-
-    document.getElementById("apply-filter").addEventListener("click", () => {
-      const from = new Date(document.getElementById("from-date").value);
-      const to = new Date(document.getElementById("to-date").value);
-
-      if (isNaN(from) || isNaN(to)) {
-        alert("Vui lòng chọn cả 2 ngày.");
-        return;
-      }
-
-      fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders')
-        .then(res => res.json())
-        .then(data => {
-          const filtered = data.filter(o => {
-            const d = new Date(o.orderDate);
-            return d >= from && d <= to;
-          });
-          renderOrders(filtered);
-        });
-    });
-
-    document.querySelector(".time-btn.active")?.click();
-  </script>
-  <script src="../assets/js/sidebar.js"></script>
+  <div id="cartNotificationModal" class="modal" style="display: none;">
+    <div class="modal-content success-content">
+      <div class="modal-header">
+        <i class="fas fa-check-circle" style="color: #52c41a;"></i>
+        <h2>Thành công</h2>
+      </div>
+      <div class="modal-body">
+        <p id="notificationMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-confirm" id="closeModalBtn">Đóng</button>
+      </div>
+    </div>
+  </div>
+  <div id="cartNotificationText" style="display: none;"></div>
 </body>
-</html> 
+</html>
